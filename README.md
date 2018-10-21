@@ -17,7 +17,7 @@
 2. run heroku update
 3. heroku login
 4. heroku create (If the heroku app has not been created already)
-5. git push heroku <branch_name>
+5. git push heroku master (master is the branch name)
 6. Setup needed environment variables
 7. Make sure Procfile has been created - and that it contains a name for the app so that you can run it continously on heroku
 8. Then run heroku ps:scale web=1 (web here will depend on the name you choose on the Procfile)
