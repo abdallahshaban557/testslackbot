@@ -2,12 +2,17 @@ import os
 import time
 import re
 from slackclient import SlackClient
-
+#needed to get environment variables
+from os.path import join, dirname
+from dotenv import load_dotenv
+ 
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 # instantiate Slack client
 slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 # starterbot's user ID in Slack: value is assigned after the bot starts up
-starterbot_id = SlackClient(os.environ.get('BOT_ID'))
+#starterbot_id = SlackClient(os.environ.get('BOT_ID'))
 
 # constants
 RTM_READ_DELAY = 1 # 1 second delay between reading from RTM
