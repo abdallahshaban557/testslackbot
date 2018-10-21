@@ -15,7 +15,7 @@ slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 #starterbot_id = SlackClient(os.environ.get('BOT_ID'))
 
 # constants
-RTM_READ_DELAY = 3 # 3 second delay between reading from RTM
+RTM_READ_DELAY = 1 # 1 second delay between reading from RTM
 EXAMPLE_COMMAND = "doo"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 
