@@ -65,6 +65,11 @@ def handle_command(command, channel):
         #response = requests.get('http://localhost/slack').text
         response = requests.get(os.environ.get('server')+"/slack").text
 
+
+    if command.startswith("snowflake"):
+        #response = requests.get('http://localhost/slack').text
+        response = requests.get(os.environ.get('server')+"/snowflake").text
+
     # Sends the response back to the channel
     slack_client.api_call(
         "chat.postMessage",
