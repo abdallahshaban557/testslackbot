@@ -7,6 +7,7 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 import requests
 
+
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
@@ -17,7 +18,7 @@ slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 
 # constants
 RTM_READ_DELAY = 1 # 1 second delay between reading from RTM
-EXAMPLE_COMMAND = "doo"
+EXAMPLE_COMMAND = "do"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 
 
@@ -50,7 +51,7 @@ def handle_command(command, channel):
         Executes bot command if the command is known
     """
     # Default response is help text for the user
-    default_response = "Not sure what you mean. Try *{}*.".format(EXAMPLE_COMMAND)
+    default_response = "Does not compute!. Try *{}*.".format(EXAMPLE_COMMAND)
 
     # Finds and executes the given command, filling in response
     response = None
@@ -67,8 +68,11 @@ def handle_command(command, channel):
 
 
     if command.startswith("snowflake"):
-        #response = requests.get('http://localhost/slack').text
-        response = requests.get(os.environ.get('server')+"/snowflake").text
+        response = requests.get(os.environ.get('server')+'/snowflake').text
+
+    if command.startswith("bring"):
+        response = "I wish I can :( :coffee:"
+
 
     # Sends the response back to the channel
     slack_client.api_call(
