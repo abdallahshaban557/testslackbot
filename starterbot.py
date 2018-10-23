@@ -57,6 +57,9 @@ def handle_command(command, channel):
     if command.startswith(EXAMPLE_COMMAND):
         response = "Sure...write some more code then I can do that!!!!"
 
+    if command.startswith("sprint notes"):
+        response = "Sure .... here is the link for the sprint notes page: https://petcoalm.atlassian.net/wiki/spaces/PDWEB/pages/679510035/Petco.com+Sprint+Notes"
+
     # Sends the response back to the channel
     slack_client.api_call(
         "chat.postMessage",
@@ -72,7 +75,6 @@ if __name__ == "__main__":
         while True:
             command, channel = parse_bot_commands(slack_client.rtm_read())
             if command:
-                print("test")
                 handle_command(command, channel)
                 
             time.sleep(RTM_READ_DELAY)
