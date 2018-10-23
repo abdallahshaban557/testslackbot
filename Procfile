@@ -1,2 +1,2 @@
 worker: python starterbot.py
-web: python APIs.py
+web: gunicorn APIs:app
