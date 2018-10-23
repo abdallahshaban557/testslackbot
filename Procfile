@@ -1,2 +1,2 @@
 worker: python starterbot.py
-api: python APIs.py
+web: python APIs.py
