@@ -63,7 +63,7 @@ def handle_command(command, channel):
 
     if command.startswith("flask"):
         #response = requests.get('http://localhost/slack').text
-        response = requests.get('http://127.0.0.1:5000/slack').text
+        response = requests.get('https://petcotestslackbot.herokuapp.com/slack').text
 
     # Sends the response back to the channel
     slack_client.api_call(
