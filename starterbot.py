@@ -70,15 +70,24 @@ def handle_command(command, channel):
     if command.startswith("snowflake"):
         response = requests.get(os.environ.get('server')+'/snowflake').text
 
-    if command.startswith("bring"):
-        response = "I wish I can :( :coffee:"
-
-
-    # Sends the response back to the channel
-    slack_client.api_call(
+    #fix up meme condition
+    if command.startswith("meme"):
+        meme_word = command.split(' ')
+        response = "/giphy " + meme_word[1]
+        print(response)
+        slack_client.api_call(
         "chat.postMessage",
         channel=channel,
-        text=response or default_response
+        command=response,
+        text=response
+        
+    )
+
+     # Sends the response back to the channel
+    slack_client.api_call(
+         "chat.commad",
+         channel=channel,
+         text=response or default_response
     )
 
 if __name__ == "__main__":
