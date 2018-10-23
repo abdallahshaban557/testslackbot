@@ -61,8 +61,8 @@ def handle_command(command, channel):
     if command.startswith("sprint notes"):
         response = "Sure .... here is the link for the sprint notes page: https://petcoalm.atlassian.net/wiki/spaces/PDWEB/pages/679510035/Petco.com+Sprint+Notes"
 
-    if command.startswith("flask"):
-        response = requests.get('http://127.0.0.1:5000/slack').text
+    #if command.startswith("flask"):
+        #response = requests.get('http://127.0.0.1:5000/slack').text
 
     # Sends the response back to the channel
     slack_client.api_call(
