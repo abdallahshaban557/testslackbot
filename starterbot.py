@@ -78,17 +78,17 @@ def handle_command(command, channel):
         slack_client.api_call(
         "chat.postMessage",
         channel=channel,
-        command=response,
-        text=response
+        text=response or default_response
         
-    )
-
+        )
+        print(meme_word[1])
      # Sends the response back to the channel
     slack_client.api_call(
-         "chat.commad",
-         channel=channel,
-         text=response or default_response
-    )
+        "chat.postMessage",
+        channel=channel,
+        text=response or default_response
+        
+        )
 
 if __name__ == "__main__":
     if slack_client.rtm_connect(with_team_state=False):
