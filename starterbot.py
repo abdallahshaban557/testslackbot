@@ -73,16 +73,12 @@ def handle_command(command, channel):
     #fix up meme condition
     if command.startswith("meme"):
         meme_word = command.split(' ')
-        response = "/giphy " + meme_word[1]
-        print(response)
-        slack_client.api_call(
-        "chat.postMessage",
-        channel=channel,
-        text=response or default_response
-        
-        )
-        print(meme_word[1])
-     # Sends the response back to the channel
+        if len(meme_word) > 1:
+            response = "/giphy " + meme_word[1]
+        else:
+            response = ' Try Writing something after meme!'
+
+    # Sends the response back to the channel
     slack_client.api_call(
         "chat.postMessage",
         channel=channel,

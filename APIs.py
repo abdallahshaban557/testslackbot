@@ -36,15 +36,20 @@ def slack():
 def snowflake():
     try:
         query = ctx.cursor()
-        query.execute('SELECT SHIPMENT_KEY FROM "WHPRD_VW"."DWADMIN"."F_OMS_YFS_SHIPMENT" LIMIT 1')
-        print(query)
+        query_file = open('./queries/Fill rate and other BOPUS metrics.sql')
+        
+        content_of_query = query_file.read()
+        print(content_of_query)
+        #query.execute('SELECT SHIPMENT_KEY,ORDER_HEADER_KEY FROM "WHPRD_VW"."DWADMIN"."F_OMS_YFS_SHIPMENT" LIMIT 10')
+        query.execute(content_of_query)
+   
         one_row = query.fetchmany(5)
         test = one_row[0]
-        print(one_row[0])
+        print(one_row)
     finally:
         query.close()
 
-    return jsonify({"Success" : True , "Payload" :  test})
+    return jsonify({"Success" : True , "Payload" :  "Done"})
 
 if __name__ == "__main__":
     #Running the flask app
