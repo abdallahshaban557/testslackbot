@@ -1,3 +1,4 @@
+#slack needed libraries
 from slackeventsapi import SlackEventAdapter
 from slackclient import SlackClient
 import os
@@ -5,7 +6,13 @@ import os
 from dotenv import load_dotenv
 from os.path import join, dirname
 #Snowflake connecter
+import json
 import snowflake.connector
+#excel library
+from openpyxl import Workbook
+#Function file
+from functions import BOPUS_METRICS
+import io
 
 #needed to get the environment variables
 dotenv_path = join(dirname(__file__), '.env')
@@ -71,17 +78,18 @@ def app_mention(event_data):
     command = message.split(' ')
 
     if command[1] == 'snowflake':
-        #Query to get snowflake data
-        query = ctx.cursor()
-        query_file = open('./queries/Fill rate and other BOPUS metrics.sql')               
-        content_of_query = query_file.read()
-        #query.execute('SELECT SHIPMENT_KEY,ORDER_HEADER_KEY FROM "WHPRD_VW"."DWADMIN"."F_OMS_YFS_SHIPMENT" LIMIT 10')
-        query.execute(content_of_query)
-        one_row = query.fetchmany(5)
-        test = one_row[0]
-        print(one_row)
-        query.close()
-        slack_client.api_call("chat.postMessage", channel=channel, text=one_row[1][0])
+        BOPUS_METRICS()
+        with open('query_results\BOPUS_Metrics.xlsx', 'rb') as f:
+            slack_client.api_call(
+                "files.upload",
+                channels=channel,
+                filename='BOPUS_Metrics.xlsx',
+                title='sampletitle',
+                initial_comment='sampletext',
+                file=io.BytesIO(f.read())
+            )
+        slack_client.api_call("chat.postMessage", channel=channel, text="Just finished your snowflake file!")
+        #slack_client.api_call("chat.postMessage", channel=channel, text=one_row[1][0])
     else:
         #Default message
         slack_client.api_call("chat.postMessage", channel=channel, text="Maybe try to ask bot for snowflake? ")
@@ -94,4 +102,4 @@ def error_handler(err):
 
 # Once we have our event listeners configured, we can start the
 # Flask server with the default `/events` endpoint on port 3000
-slack_events_adapter.start(port=3000)
+slack_events_adapter.start(port=3000 , debug=False)
