@@ -27,20 +27,20 @@ slack_bot_token = os.environ.get('SLACK_BOT_TOKEN')
 slack_client = SlackClient(slack_bot_token)
 
 
-#snowflake
-ctx = snowflake.connector.connect(
-    user = os.environ.get('snowflake_username'),
-    password=os.environ.get('snowflake_password'),
-    account='petco.us-east-1'
-        )
-cs = ctx.cursor()
-try:
-    cs.execute("SELECT current_version()")
-    one_row = cs.fetchone()
-    print(one_row[0])
-finally:
-    cs.close()
-#ctx.close()
+# #snowflake
+# ctx = snowflake.connector.connect(
+#     user = os.environ.get('snowflake_username'),
+#     password=os.environ.get('snowflake_password'),
+#     account='petco.us-east-1'
+#         )
+# cs = ctx.cursor()
+# try:
+#     cs.execute("SELECT current_version()")
+#     one_row = cs.fetchone()
+#     print(one_row[0])
+# finally:
+#     cs.close()
+# #ctx.close()
 
 
 
