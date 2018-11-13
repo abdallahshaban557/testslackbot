@@ -72,28 +72,36 @@ def reaction_added(event_data):
 @slack_events_adapter.on("app_mention")
 def app_mention(event_data):
     event = event_data["event"]
+    print(event)
     #emoji = event["reaction"]
     channel = event["channel"]
     message=event["text"]
     command = message.split(' ')
 
     if command[1] == 'snowflake':
+        slack_client.api_call("chat.postMessage", channel=channel, text="Working on your snowflake file!")
         BOPUS_METRICS()
         with open('query_results\BOPUS_Metrics.xlsx', 'rb') as f:
             slack_client.api_call(
                 "files.upload",
                 channels=channel,
                 filename='BOPUS_Metrics.xlsx',
-                title='sampletitle',
-                initial_comment='sampletext',
+                title='BOPUS Metrics',
+                initial_comment='Here is your snowflake file',
                 file=io.BytesIO(f.read())
             )
-        slack_client.api_call("chat.postMessage", channel=channel, text="Just finished your snowflake file!")
+    
+    elif command[1] == 'jira':
+        slack_client.api_call("chat.postMessage", channel=channel, text="https://petcoalm.atlassian.net/browse/PDOMS-"+command[2])
+    
+    elif command[1] == 'compiled' and command[2] == 'sprint' and command[3] == 'notes':
+        slack_client.api_call("chat.postMessage", channel=channel, text="https://petcoalm.atlassian.net/wiki/spaces/PDWEB/pages/679510035/Petco.com+Sprint+Notes")
+        
         #slack_client.api_call("chat.postMessage", channel=channel, text=one_row[1][0])
     else:
         #Default message
         slack_client.api_call("chat.postMessage", channel=channel, text="Maybe try to ask bot for snowflake? ")
-
+    
 
 # Error events
 @slack_events_adapter.on("error")
