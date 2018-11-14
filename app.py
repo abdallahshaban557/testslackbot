@@ -109,5 +109,5 @@ def error_handler(err):
     print("ERrrrROR: " + str(err))
 
 # Once we have our event listeners configured, we can start the
-# Flask server with the default `/events` endpoint on port 80
-slack_events_adapter.start(port=80 , debug=False)
+# Flask server with the default `/events` endpoint on port 3000
+slack_events_adapter.start(port=3000 , debug=False)
