@@ -92,15 +92,15 @@ def app_mention(event_data):
             )
     
     elif command[1] == 'jira':
-        slack_client.api_call("chat.postMessage", channel=channel, text="https://petcoalm.atlassian.net/browse/PDOMS-"+command[2])
+        return slack_client.api_call("chat.postMessage", channel=channel, text="https://petcoalm.atlassian.net/browse/PDOMS-"+command[2])
     
     elif command[1] == 'compiled' and command[2] == 'sprint' and command[3] == 'notes':
-        slack_client.api_call("chat.postMessage", channel=channel, text="https://petcoalm.atlassian.net/wiki/spaces/PDWEB/pages/679510035/Petco.com+Sprint+Notes")
+        return slack_client.api_call("chat.postMessage", channel=channel, text="https://petcoalm.atlassian.net/wiki/spaces/PDWEB/pages/679510035/Petco.com+Sprint+Notes")
         
         #slack_client.api_call("chat.postMessage", channel=channel, text=one_row[1][0])
     else:
         #Default message
-        slack_client.api_call("chat.postMessage", channel=channel, text="Maybe try to ask bot for snowflake? ")
+        return slack_client.api_call("chat.postMessage", channel=channel, text="Maybe try to ask bot for snowflake? ")
     
 
 # Error events
