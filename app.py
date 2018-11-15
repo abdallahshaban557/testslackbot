@@ -11,7 +11,7 @@ import snowflake.connector
 #excel library
 from openpyxl import Workbook
 #Function file
-from functions import BOPUS_METRICS
+from functions import BOPUS_METRICS, VENDOR_ATP
 import io
 
 #needed to get the environment variables
@@ -79,10 +79,10 @@ def app_mention(event_data):
     command = message.split(' ')
 
     if command[1] == 'snowflake':
-        slack_client.api_call("chat.postMessage", channel=channel, text="Working on your snowflake file!")
+        slack_client.api_call("chat.postMessage", channel=channel, text="Working on your BOPUS file!")
         BOPUS_METRICS()
         with open('query_results\BOPUS_Metrics.xlsx', 'rb') as f:
-            slack_client.api_call(
+            return slack_client.api_call(
                 "files.upload",
                 channels=channel,
                 filename='BOPUS_Metrics.xlsx',
@@ -90,7 +90,28 @@ def app_mention(event_data):
                 initial_comment='Here is your snowflake file',
                 file=io.BytesIO(f.read())
             )
-    
+
+
+
+
+    if command[1] == 'vendor':
+        slack_client.api_call("chat.postMessage", channel=channel, text="Working on your vendor file!")
+        VENDOR_ATP()
+        with open('query_results\VENDOR_ATP.xlsx', 'rb') as f:
+            return slack_client.api_call(
+                "files.upload",
+                channels=channel,
+                filename='VENDOR_ATP.xlsx',
+                title='Vendor ATP',
+                initial_comment='Here is your Vendor ATP file',
+                file=io.BytesIO(f.read())
+            )
+
+
+
+
+
+
     elif command[1] == 'jira':
         return slack_client.api_call("chat.postMessage", channel=channel, text="https://petcoalm.atlassian.net/browse/PDOMS-"+command[2])
     

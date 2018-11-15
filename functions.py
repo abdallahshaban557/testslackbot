@@ -27,6 +27,33 @@ finally:
 
 
 
+def VENDOR_ATP():
+#Query to get snowflake data
+        query = ctx.cursor()
+        query_file = open('./queries/Vendor Report.sql')               
+        content_of_query = query_file.read()
+        #query.execute('SELECT SHIPMENT_KEY,ORDER_HEADER_KEY FROM "WHPRD_VW"."DWADMIN"."F_OMS_YFS_SHIPMENT" LIMIT 10')
+        query.execute(content_of_query)
+        one_row = query.fetchall()
+        description = query.description
+        number_of_columns = len(description)
+        #get length of rows from snowflake array
+        query_length = len(one_row)
+        #create excel workbook
+        wb = Workbook()
+        ws = wb.active
+        for j in range (0,number_of_columns):
+            ws.cell(row=1, column=j+1).value = description[j][0]
+        for i in range (0,query_length):
+            #get the active worksheet
+            for j in range(0, number_of_columns):
+                #print(one_row[i][j])
+                ws.cell(row=i+2, column=j+1).value = one_row[i][j]
+            
+        #saves query file
+        wb.save('query_results\VENDOR_ATP.xlsx')
+        query.close()
+
 def BOPUS_METRICS():
 #Query to get snowflake data
         query = ctx.cursor()
@@ -46,10 +73,13 @@ def BOPUS_METRICS():
             ws.cell(row=1, column=j+1).value = description[j][0]
         for i in range (0,query_length):
             #get the active worksheet
-            for j in range(0, 5):
+            for j in range(0, number_of_columns):
                 #print(one_row[i][j])
                 ws.cell(row=i+2, column=j+1).value = one_row[i][j]
             
         #saves query file
         wb.save('query_results\BOPUS_Metrics.xlsx')
         query.close()
+
+
+
