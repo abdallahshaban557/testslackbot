@@ -11,24 +11,26 @@ dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
 #snowflake
-ctx = snowflake.connector.connect(
-    user = os.environ.get('snowflake_username'),
-    password=os.environ.get('snowflake_password'),
-    account='petco.us-east-1'
-        )
-cs = ctx.cursor()
-try:
-    cs.execute("SELECT current_version()")
-    one_row = cs.fetchone()
-    print(one_row[0])
-finally:
-    cs.close()
+def snowflake_connection():
+    ctx = snowflake.connector.connect(
+        user = os.environ.get('snowflake_username'),
+        password=os.environ.get('snowflake_password'),
+        account='petco.us-east-1'
+            )
+    cs = ctx.cursor()
+    try:
+        cs.execute("SELECT current_version()")
+        one_row = cs.fetchone()
+        return ctx
+    finally:
+        cs.close()
 
 
 
 
 def VENDOR_ATP():
 #Query to get snowflake data
+        ctx = snowflake_connection()
         query = ctx.cursor()
         query_file = open('./queries/Vendor Report.sql')               
         content_of_query = query_file.read()
@@ -56,6 +58,7 @@ def VENDOR_ATP():
 
 def BOPUS_METRICS():
 #Query to get snowflake data
+        ctx = snowflake_connection()
         query = ctx.cursor()
         query_file = open('./queries/Fill rate and other BOPUS metrics.sql')               
         content_of_query = query_file.read()
