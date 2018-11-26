@@ -10,20 +10,13 @@ from openpyxl import Workbook, load_workbook
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
-#snowflake
+#snowflake connection function
 def snowflake_connection():
     ctx = snowflake.connector.connect(
         user = os.environ.get('snowflake_username'),
         password=os.environ.get('snowflake_password'),
         account='petco.us-east-1'
             )
-    cs = ctx.cursor()
-    try:
-        cs.execute("SELECT current_version()")
-        one_row = cs.fetchone()
-        return ctx
-    finally:
-        cs.close()
 
 
 
