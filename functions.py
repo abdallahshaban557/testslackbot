@@ -17,6 +17,7 @@ def snowflake_connection():
         password=os.environ.get('snowflake_password'),
         account='petco.us-east-1'
             )
+    return ctx
 
 
 
