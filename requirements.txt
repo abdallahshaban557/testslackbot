@@ -38,6 +38,6 @@ six==1.11.0
 slackclient==1.3.0
 slackeventsapi==2.0.0
 snowflake-connector-python==1.6.11
-urllib3==1.23
+urllib3==1.26.5
 websocket-client==0.53.0
 Werkzeug==0.14.1
