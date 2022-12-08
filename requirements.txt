@@ -4,7 +4,7 @@ azure-nspkg==2.0.0
 azure-storage==0.36.0
 boto3==1.8.9
 botocore==1.11.9
-certifi==2018.10.15
+certifi==2022.12.7
 cffi==1.11.5
 chardet==3.0.4
 Click==7.0
